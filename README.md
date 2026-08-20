@@ -121,8 +121,18 @@ changes worth keeping when you swap the glyph:
 - **A `prefers-color-scheme` rule inside the SVG.** A black mark is invisible on a dark tab bar.
   The media query matches the viewer's system theme, not the page's background.
 
-For a real deploy, write the same SVG to `/icon.svg` and link the file. Add a PNG for
-`apple-touch-icon` while you are there, on a solid ground — iOS backs transparency with black.
+`icon.svg` in this repo is that same mark written out as a file, commented, ready to copy
+into a project and re-glyph. Use it for a real deploy — the inline `data:` URI exists so the
+demo stays one file, not because it is the better way to ship:
+
+```html
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+```
+
+**Do not point this at an app-icon tile.** Those are drawn for a 512px rounded square with a
+background and a border; at 16px in a tab one renders as a grey smudge. The favicon is the
+bare mark on nothing. Keep the tile for `apple-touch-icon` and the PWA manifest, which need a
+solid ground — iOS backs transparency with black — and add a PNG for those while you are here.
 
 ## Placeholder content
 
