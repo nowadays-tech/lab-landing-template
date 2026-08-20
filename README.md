@@ -39,7 +39,7 @@ gradient.
   `--font-sans` is already the system stack, so `-apple-system` resolves on macOS with
   nothing loaded over the network.
 - 768px column, left-aligned throughout. Nothing on the page is centred.
-- `rounded-lg` buttons, 16px panel radius, 12px card radius. No shadows anywhere.
+- Pill buttons (`rounded-full`), 16px panel radius, 12px card radius. No shadows anywhere.
 - No rule under the header and none over the footer. The whitespace separates them.
 - One product shot in the hero and keycaps in step 1. No other images.
 - The principles section has no boxes at all, only whitespace between a two-column `<dl>`.
