@@ -48,6 +48,10 @@ gradient.
 - Type tops out at `text-5xl` in the hero and `text-3xl` for section headings. The
   principles section runs one step larger than the others and carries a line under its
   heading, because it is the section that has to land.
+- The story sits in from the column behind a hairline, and its turn — the one sentence the
+  section exists to land — takes full ink against the muted rest. Left flush at the same edge
+  as everything else, four paragraphs of muted prose read as filler and the turn is lost in
+  them.
 - The gradient box carries more padding on top than on the other three sides, so the cream
   end of the gradient has room to read before the text starts.
 - The gradient box is the one thing wider than the column. It reaches out by exactly its own

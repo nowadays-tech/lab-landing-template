@@ -121,7 +121,12 @@
             Why build another notebook?
           </h2>
 
-          <div class="mt-6 max-w-[56ch] space-y-5 text-lg text-pretty text-muted">
+          <!-- Set in from the column and hung off a hairline, so the argument reads as an
+               aside rather than more body copy. Its turn takes full ink against the muted
+               rest, because that is the sentence the section exists to land. -->
+          <div
+            class="mt-6 max-w-[56ch] space-y-5 border-l border-hairline pl-6 text-lg text-pretty text-muted sm:pl-8"
+          >
             <p>
               There is no shortage of good note-taking apps. I kept running into the same problem with all of them: they
               store a link, and a link is a promise someone else can break.
@@ -130,7 +135,7 @@
               Half of the references in my old notes now point at a parked domain, a paywall, or a redirect to a
               homepage. The reading survived in my head. The source did not.
             </p>
-            <p>
+            <p class="text-ink">
               So Fieldnote saves the page itself. Text, images, stylesheets, the lot, written to a folder on your disk in
               formats you can open without this app. A capture from 2019 opens the same as one from this morning.
             </p>
