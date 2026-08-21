@@ -13,18 +13,23 @@ A single-file HTML landing page template for a software product.
 open index.html
 ```
 
-That is the whole build step. Tailwind v4 compiles in the browser from the
-`<style type="text/tailwindcss">` block.
+That is the whole build step. Tailwind v4 compiles in the browser from the CDN script in
+the head. The page carries no `<style>` block: every colour, radius, and gradient is a
+stock utility or an arbitrary value, so the markup pastes into any Tailwind project
+without a theme to merge first.
 
-For a real deploy, compile the CSS instead of shipping the ~400 KB browser compiler:
+For a real deploy, compile the CSS instead of shipping the ~400 KB browser compiler.
+There is nothing to move across — `src/input.css` is one line:
+
+```css
+@import "tailwindcss";
+```
 
 ```sh
 npx @tailwindcss/cli -i src/input.css -o dist/style.css --minify
 ```
 
-Move the `@theme`, `:root`, and `@utility` blocks into `src/input.css` with
-`@import "tailwindcss";` on the first line, then swap the `<script>` tag for
-`<link rel="stylesheet" href="dist/style.css">`.
+Then swap the `<script>` tag for `<link rel="stylesheet" href="dist/style.css">`.
 
 If the project has no CSS build and you do not want to add one for a single page, write
 the design out in plain CSS instead. It is about 200 lines: the tokens, one centred
@@ -35,7 +40,7 @@ column, cream boxes, and the gradient.
 Narrow and quiet. The visual vocabulary is two things: cream boxes, and one box with a
 gradient.
 
-- No webfont. There is no `<link>` and no `@theme` font override — Tailwind's default
+- No webfont. There is no `<link>` and no font override — Tailwind's default
   `--font-sans` is already the system stack, so `-apple-system` resolves on macOS with
   nothing loaded over the network.
 - 768px column, left-aligned throughout. Nothing on the page is centred.
@@ -65,28 +70,40 @@ gradient.
 
 ## Rebranding
 
-Everything visual comes from one `@theme` block at the top of the file.
+The palette is written into the class names. There is no theme block, so changing a
+colour is one find-and-replace per row of this table.
 
-| Token             | Value                | Used for                                  |
-| ----------------- | -------------------- | ----------------------------------------- |
-| `--color-canvas`  | `#ffffff`            | Page background, secondary button fill    |
-| `--color-surface` | `#f7f4ef`            | Cream boxes and cards                     |
-| `--color-ink`     | `#000000`            | Headings, body, primary button            |
-| `--color-muted`   | `#656463`            | Supporting copy, eyebrows, footer links   |
-| `--color-flame`   | `#ff4f00`            | CTA gradient and focus ring               |
-| `--color-ember`   | `#c93400`            | Inline links on light panels              |
-| `--color-hairline`| `rgb(0 0 0 / 0.1)`   | Every rule, ring, and outline on the page |
-| `--radius-panel`  | `1rem`               | Full-width panels                         |
-| `--radius-card`   | `0.75rem`            | Cards and step boxes                      |
+| Value              | Written as                              | Used for                                  |
+| ------------------ | --------------------------------------- | ----------------------------------------- |
+| `#ffffff`          | `bg-white`, `text-white`                | Page background, secondary button fill    |
+| `#f7f4ef`          | `bg-[#f7f4ef]`                          | Cream boxes and cards                     |
+| `#000000`          | `text-black`, `bg-black`                | Headings, body, primary button            |
+| `#656463`          | `text-[#656463]`                        | Supporting copy, eyebrows, footer links   |
+| `#ff4f00`          | `outline-[#ff4f00]`, the CTA gradient   | Focus ring and the hot end of the gradient|
+| `#c93400`          | `text-[#c93400]`                        | Inline links on light panels              |
+| `rgb(0 0 0 / 0.1)` | `border-`/`ring-`/`outline-black/10`    | Every rule, ring, and outline on the page |
+| `1rem`             | `rounded-2xl`                           | Full-width panels                         |
+| `0.75rem`          | `rounded-xl`                            | Cards and step boxes                      |
 
-**One hairline, not three.** Everything that draws a 1px line — `border-hairline`,
-`ring-hairline`, `outline-hairline` — reads that one token. Reaching for `black/5` here and
-`black/10` there is how a page ends up with three weights of the same line doing the same job.
+The same list sits in a comment at the top of `index.html`, because a class attribute
+cannot hold one and the hex values otherwise explain themselves nowhere.
 
-One custom utility sits below the theme:
+**One hairline, not three.** Everything that draws a 1px line reads `black/10`. Reaching
+for `black/5` here and `black/10` there is how a page ends up with three weights of the
+same line doing the same job.
 
-- `glow-warm` — the noise-over-radial-gradient on the closing CTA. The grain is an inline
-  `feTurbulence` SVG in `--noise`; raise the `intercept` value to make it coarser.
+**Rebranding twice is the point to stop find-and-replacing.** Put the six values in a
+`@theme` block, swap the hex classes for token names, and you are back to one edit point.
+The hex-in-the-class version exists so the file drops into a project whose theme you do
+not want to touch, not because it is the better way to hold a palette.
+
+### The gradient
+
+The closing CTA is the one piece of decoration: grain over a radial gradient, both in a
+single `bg-[image:...]` value with `bg-[#f7f4ef]` under it. The grain is an inline
+`feTurbulence` SVG, percent-encoded down to alphanumerics — a space, quote, or bracket in
+there would end the class early. Raise its `intercept` (`%270.09%27` in the URI) to make
+the grain coarser.
 
 ## Icons
 
@@ -102,8 +119,8 @@ Swap the filename for any name in the [Lucide set](https://lucide.dev/icons). Ke
 
 `<img>` rather than inline SVG or the `lucide` UMD script, because the page has no
 JavaScript and should keep it that way. The cost: **an `<img>` cannot be recoloured.** The
-icons render black, which matches `--color-ink`. If you change `--color-ink`, or need a
-light icon on a dark control, inline that SVG with `stroke="currentColor"` instead.
+icons render black, which matches the body text. If you move off black, or need a light
+icon on a dark control, inline that SVG with `stroke="currentColor"` instead.
 
 **Before shipping, vendor the six files into the repo.** A CDN request per icon per page
 view sends every visitor's IP to jsDelivr, and this page's own copy says "No tracking."
