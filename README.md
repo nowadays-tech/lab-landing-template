@@ -3,7 +3,7 @@
 A single-file HTML landing page template for a software product.
 
 - **Structure** from [linkjar.app](https://linkjar.app): header, hero, product shot,
-  founder story, three steps, principles, closing CTA, one-row footer.
+  founder story, three steps, principles, questions, closing CTA, one-row footer.
 - **Design** from [palette.team](https://palette.team): warm cream panels on white,
   black on white type, and a grainy orange gradient on the closing CTA.
 
@@ -44,6 +44,10 @@ gradient.
 - One product shot in the hero and keycaps in step 1. No other images.
 - The principles section has no boxes at all, only whitespace between a two-column `<dl>`.
   Three boxed steps followed by six boxed principles would turn the page into cards.
+- The questions are a `<dl>` too, stacked and ruled by the hairline rather than boxed, for the
+  same reason. Four short answers, all of them open — an accordion hides two lines behind a
+  click and buys nothing. Answer what somebody would otherwise email about, and keep the
+  answers true; a question is where a page lies most easily.
 - The header is two plain text links, so the hero holds the only filled button.
 - Type tops out at `text-5xl` in the hero and `text-3xl` for section headings. The
   principles section runs one step larger than the others and carries a line under its
@@ -164,5 +168,5 @@ Worth keeping if you extend the page:
 
 ## Not included
 
-This structure has no logo cloud, testimonials, pricing table, or FAQ.
-[palette.team](https://palette.team) has all four if you want to graft them on.
+This structure has no logo cloud, testimonials, or pricing table.
+[palette.team](https://palette.team) has all three if you want to graft them on.
